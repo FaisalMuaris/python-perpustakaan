@@ -2,8 +2,32 @@ from django.shortcuts import render, redirect
 from perpustakaan.models import Buku
 from perpustakaan.forms import FormBuku
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.contrib.auth.forms import UserCreationForm
 
 
+@login_required(login_url=settings.LOGIN_URL)
+def signup(request):
+    if request.POST:
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User Berhasil Dibuat!")
+            return redirect('signup')
+        else:
+            messages.error(request, "Terjadi Kesalahan!")
+            return redirect('signup')
+    else:
+        form = UserCreationForm()
+        konteks = {
+            'form': form,
+        }
+
+    return render(request, 'signup.html', konteks)
+
+
+@login_required(login_url=settings.LOGIN_URL)
 def hapus_buku(request, id_buku):
     buku = Buku.objects.filter(id=id_buku)
     buku.delete()
@@ -12,11 +36,12 @@ def hapus_buku(request, id_buku):
     return redirect('buku')
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def ubah_buku(request, id_buku):
     buku = Buku.objects.get(id=id_buku)
     template = 'ubah_buku.html'
     if request.POST:
-        form = FormBuku(request.POST, instance=buku)
+        form = FormBuku(request.POST, request.FILES, instance=buku)
         if form.is_valid():
             form.save()
             messages.success(request, "Data Berhasil Diperbaharui!")
@@ -32,6 +57,7 @@ def ubah_buku(request, id_buku):
     return render(request, template, konteks)
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def buku(request):
     # menampilkan semua buku
     books = Buku.objects.all()
@@ -55,9 +81,10 @@ def penerbit(request):
     return render(request, 'penerbit.html')
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def tambah_buku(request):
     if request.POST:
-        form = FormBuku(request.POST)
+        form = FormBuku(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             form = FormBuku()

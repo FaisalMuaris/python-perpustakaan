@@ -20,6 +20,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>COVER</th>
                             <th>JUDUL</th>
                             <th>PENULIS</th>
                             <th>PENERBIT</th>
@@ -31,6 +32,13 @@
                     <tbody>
                         {% for buku in books %}
                         <tr>
+                            <td>
+                                
+                                {% if buku.cover %}
+                                    <img src="{{ buku.cover.url }}" alt="" width="90px">
+                                {% endif %}
+                                    
+                            </td>
                             <td ><a style="text-decoration: none; " href="{% url 'ubah_buku' buku.id %}">{{ buku.judul }}</a></td>
                             <td>{{ buku.penulis }}</td>
                             <td>{{ buku.penerbit }}</td>

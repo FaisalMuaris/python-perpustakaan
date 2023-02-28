@@ -10,7 +10,7 @@
                     <div class="alert alert-success"> {{ pesan }} </div>
                 {% endif %}
                     
-                <form action="/tambah-buku/" method="post">
+                <form action="/tambah-buku/" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% comment %} Tampilakn form dengan paragraph {% endcomment %}
                     {{ form.as_p }}
