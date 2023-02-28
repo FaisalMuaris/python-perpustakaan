@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                
+                {% if pesan %}
+                    <div class="alert alert-success"> {{ pesan }} </div>
+                {% endif %}
+                    
+                <form action="/tambah-buku/" method="post">
+                    {% csrf_token %}
+                    {% comment %} Tampilakn form dengan paragraph {% endcomment %}
+                    {{ form.as_p }}
+                    
+                    <button class="btn btn-primary" type="submit">Tambah Buku</button>
+                    <a href="/buku" class="btn btn-warning">Kembali</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock content %}
+    

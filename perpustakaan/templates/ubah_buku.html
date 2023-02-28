@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-6">
+                <h3>Ubah: {{ buku.judul }} </h3>
+
+                
+                {% for message in messages %}
+                    
+                    {% if message %}
+                        <div class="alert alert-success"> {{ message }} </div>
+                    {% endif %}
+                        
+                {% endfor %}
+                    
+
+                <form action=" {% url 'ubah_buku' buku.id %} " method="post">
+                    {% csrf_token %}
+                    {% comment %} Tampilakn form dengan paragraph {% endcomment %}
+                    {{ form.as_p }}
+            
+                    <button class="btn btn-primary" type="submit">Simpan</button>
+                    <a href="/buku" class="btn btn-warning">Kembali</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock content %}
+    
