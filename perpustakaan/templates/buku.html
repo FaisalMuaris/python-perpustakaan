@@ -9,6 +9,7 @@
                     Data buku
                 </h3>
                 <a class="btn btn-primary mb-2" href="{% url 'tambah_buku' %}">Tambah Buku</a>
+                <a class="btn btn-success mb-2 " href="{% url 'export_xls' %}">Export .xls</a>
                 {% for message in messages %}
                     
                     {% if message %}
